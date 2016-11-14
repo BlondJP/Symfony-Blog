@@ -1,0 +1,30 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+    appbundle.article.repository.class: AppBundle\Repository\ArticleRepository
+
+
+
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    articlerepository:
+            class: Doctrine\ORM\EntityRepository
+            factory: ["@doctrine.orm.entity_manager", getRepository]
+            arguments: [AppBundle\Entity\Article]
+
+    commentrepository:
+                class: AppBundle\Repository\CommentRepository
+                factory: ["@doctrine.orm.entity_manager", getRepository]
+                arguments: [AppBundle\Entity\Comment]
+
+    app.article:
+        class:        AppBundle\Service\ArticleService
+        arguments:    ["@doctrine.orm.entity_manager", "@articlerepository"]
+
+    app.comment:
+            class:        AppBundle\Service\CommentService
+            arguments:    ["@doctrine.orm.entity_manager", "@commentrepository"]

@@ -1,0 +1,30 @@
+{% extends "::base.html.twig" %}
+
+
+{% block body %}
+            <h1>{{ article.title }}</h1>
+            <p>{{ article.content }}</p>
+
+
+_________________________________________________________________________________________________________________________________________________________________
+<br><br>
+
+    <div class="col-md-4">
+        {{ form_start(formComment) }}
+        {{ form_widget(formComment.author, {'attr': {'class': 'form-control', 'placeholder': 'Auteur du commentaire'}}) }}
+        <br/>
+        {{ form_widget(formComment.content, {'attr': {'class': 'form-control', 'placeholder': 'Contenu de l\'article'}}) }}
+        <br/>
+        {{ form_widget(formComment.save, {'attr': {'class': 'btn btn-primary'}}) }}
+        {{ form_end(formComment) }}
+    </div>
+
+
+    <div class="col-md-8">
+    {% for comment in comments %}
+        <h2>{{ comment.author }}</h2>
+        <p>{{ comment.content }}</p>
+    {% endfor %}
+    </div>
+
+{% endblock body %}

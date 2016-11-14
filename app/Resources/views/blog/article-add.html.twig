@@ -1,0 +1,13 @@
+{% extends "::base.html.twig" %}
+
+
+{% block body %}
+    <h1 class="page-header">Ajoutons article</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre de L\'article'}}) }}
+        <br/>
+        {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Contenu de l\'article'}}) }}
+        <br/>
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+    {{ form_end(form) }}
+{% endblock body %}
