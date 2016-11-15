@@ -32,14 +32,6 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("login")
-
-    public function loginAction()
-    {
-        return $this->render("FOSUserBundle::layout.html.twig", []);
-    }*/
-
-    /**
      * @Route("/articles", name="articles")
      */
     public function indexAction()
@@ -83,6 +75,7 @@ class BlogController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
+            //$category = $form->getData();
             $articleService = $this->get('app.article');
             $articleService->createArticle($article);
             return $this->redirectToRoute('articles');

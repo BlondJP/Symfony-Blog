@@ -10,6 +10,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.twig_extension:
+            class: AppBundle\Twig\AppExtension
+            public: false
+            tags:
+                - { name: twig.extension }
+            arguments:    ["@doctrine.orm.entity_manager", "@categoryrepository"]
 
     articlerepository:
             class: Doctrine\ORM\EntityRepository
@@ -21,10 +27,19 @@ services:
                 factory: ["@doctrine.orm.entity_manager", getRepository]
                 arguments: [AppBundle\Entity\Comment]
 
+    categoryrepository:
+                    class: AppBundle\Repository\CategoryRepository
+                    factory: ["@doctrine.orm.entity_manager", getRepository]
+                    arguments: [AppBundle\Entity\Category]
+
     app.article:
         class:        AppBundle\Service\ArticleService
         arguments:    ["@doctrine.orm.entity_manager", "@articlerepository"]
 
     app.comment:
-            class:        AppBundle\Service\CommentService
-            arguments:    ["@doctrine.orm.entity_manager", "@commentrepository"]
+        class:        AppBundle\Service\CommentService
+        arguments:    ["@doctrine.orm.entity_manager", "@commentrepository"]
+
+    app.category:
+        class:        AppBundle\Service\CategoryService
+        arguments:    ["@doctrine.orm.entity_manager", "@categoryrepository"]

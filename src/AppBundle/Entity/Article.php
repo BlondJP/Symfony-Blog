@@ -22,14 +22,14 @@ class Article
     private $id;
 
     /**
-     * @var string
+     * @var string (plus de 10 caractère)
      *
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
-     * @var string
+     * @var string (au moins 18 caractères)
      *
      * @ORM\Column(name="content", type="text")
      */
@@ -46,6 +46,44 @@ class Article
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="article")
      */
     private $comments;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="comments")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * @param mixed $article
+     */
+    public function setArticle($article)
+    {
+        $this->article = $article;
+    }
 
     /**
      * @return mixed

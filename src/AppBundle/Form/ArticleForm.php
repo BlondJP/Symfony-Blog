@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,7 +17,10 @@ class ArticleForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
+            ->add('category', EntityType::class, ['class' => 'AppBundle:Category','choice_label' => 'name', 'label'=>'Catégorie'])
+            ->add('title', TextType::class, array(
+                'required' => true,
+            ))
             ->add('content', TextareaType::class)
             ->add('save', SubmitType::class, array('label' => 'Ajouter'));
 
