@@ -57,7 +57,6 @@ class BlogController extends Controller
             $commentService->createComment($comment);
         }
 
-            //dump($article); die;
 
         return $this->render('blog/article.html.twig', ['article' => $article, 'formComment' => $formComment->createView(), 'comments' => $article->getComments()]);
     }
@@ -67,32 +66,23 @@ class BlogController extends Controller
      */
     public function createAction(Request $request)
     {
-        //return var_dump($this->getParameter('brochures_directory'));
         $article = new Article();
         $form = $this->createForm(ArticleForm::class, $article);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /* GESTION UPLOAD*/
-            $file = $article->getBrochure();
-            // Generate a unique name for the file before saving it
+
+            /*CODE METIER*/
+            $file = $article->getImage();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            // Move the file to the directory where brochures are stored
-
-            //dump($fileName);
-            //die;
-
             $file->move(
-                $this->getParameter('brochures_directory'),
+                $this->getParameter('images_directory'),
                 $fileName
             );
-            // Update the 'brochure' property to store the PDF file name
-            // instead of its contents
-            $article->setBrochure($fileName);
-            /* FIN GESTION UPLOAD*/
+            $article->setImage($fileName);
+            /*FIN CODE METIER*/
 
             $articleService = $this->get('app.article');
             $articleService->createArticle($article);
-
             return $this->redirectToRoute('articles');
         }
 
@@ -106,13 +96,23 @@ class BlogController extends Controller
     {
         $articleService = $this->get('app.article');
         $article = $articleService->getOneArticle(['id' => $id]);
-        $article->setBrochure(
-            new File($this->getParameter('brochures_directory').'/'.$article->getBrochure())
+        $article->setImage(
+            new File($this->getParameter('images_directory').'/'.$article->getImage())
         );
         $form = $this->createForm(ArticleForm::class, $article);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /*CODE METIER*/
+            $file = $article->getImage();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move(
+                $this->getParameter('images_directory'),
+                $fileName
+            );
+            $article->setImage($fileName);
             $articleService->updateArticle($article);
+            /*FIN CODE METIER*/
 
             return $this->redirectToRoute('articles');
         }

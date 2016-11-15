@@ -25,22 +25,30 @@ class Article
     /**
      * @ORM\Column(type="string")
      *
-     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
-     * @Assert\File(mimeTypes={ "application/pdf" })
+     * @Assert\NotBlank(message="Choisissez une image à associer à votre article")
+     * @Assert\File(mimeTypes={ "image/jpeg" })
      */
-    private $brochure;
+    private $image;
 
-    public function getBrochure()
+    /**
+     * @return mixed
+     */
+    public function getImage()
     {
-        return $this->brochure;
+        return $this->image;
     }
 
-    public function setBrochure($brochure)
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
     {
-        $this->brochure = $brochure;
+        $this->image = $image;
 
         return $this;
     }
+
+
 
     /**
      * @var string (plus de 10 caractère)

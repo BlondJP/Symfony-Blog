@@ -5,9 +5,9 @@ imports:
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    locale: fr
-    brochures_directory: "%kernel.root_dir%/../web/uploads/brochures"
+#parameters:
+ #   locale: fr
+  #  images_directory: "%kernel.root_dir%/../web/uploads/img"
 
 
 framework:

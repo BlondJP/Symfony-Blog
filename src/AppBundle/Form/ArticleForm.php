@@ -21,7 +21,7 @@ class ArticleForm extends AbstractType
                 'required' => true,
             ))
             ->add('content', TextareaType::class)
-            ->add('brochure', FileType::class, array('label' => 'Brochure (PDF file)'))
+            ->add('image', FileType::class, array('label' => 'Image de l\'article'))
             ->add('save', SubmitType::class, array('label' => 'Ajouter'));
 
         if (!$options['data']->getId() == null) {

@@ -3,9 +3,8 @@
 
 {% block body %}
             <h1>{{ article.title }}</h1>
+            <img src="{{ asset('/uploads/img/' ~ article.image) }}" width="400" height="400"/>
             <p>{{ article.content }}</p>
-    <a href="{{ asset('/uploads/brochures/' ~ article.brochure) }}">View brochure (PDF)</a>
-
 
 
     _________________________________________________________________________________________________________________________________________________________________
