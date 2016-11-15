@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Comment
+ * Comment.
  *
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentRepository")
@@ -42,21 +42,22 @@ class Comment
      */
     private $date;
 
-
     /**
-     * @ORM\ManyToOne(targetEntity="Article", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="Article", inversedBy="comments", cascade={"persist"})
      * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
+     *
      */
     private $article;
 
     public function setArticle($article)
     {
         $this->article = $article;
+
         return $this;
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -66,7 +67,7 @@ class Comment
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param string $author
      *
@@ -80,7 +81,7 @@ class Comment
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return string
      */
@@ -90,7 +91,7 @@ class Comment
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
      *
@@ -104,7 +105,7 @@ class Comment
     }
 
     /**
-     * Get content
+     * Get content.
      *
      * @return string
      */
@@ -114,7 +115,7 @@ class Comment
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
      *
@@ -128,7 +129,7 @@ class Comment
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -137,4 +138,3 @@ class Comment
         return $this->date;
     }
 }
-

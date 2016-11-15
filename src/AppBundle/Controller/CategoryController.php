@@ -3,27 +3,16 @@
  * Created by PhpStorm.
  * User: jean-philippeblond
  * Date: 14/11/2016
- * Time: 17:23
+ * Time: 17:23.
  */
-
 
 namespace AppBundle\Controller;
 
-
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Category;
-use AppBundle\Entity\Comment;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\Request;
-
-use AppBundle\Form\CommentForm;
 use Symfony\Component\HttpFoundation\Response;
-
 
 class CategoryController extends Controller
 {
@@ -35,7 +24,7 @@ class CategoryController extends Controller
         $categoryService = $this->get('app.category');
         $category = $categoryService->getCategory($categoryId);
 
-        return $this->render("blog/articles.html.twig", ['articles' => $category->getArticles()]);
+        return $this->render('blog/articles.html.twig', ['articles' => $category->getArticles()]);
     }
 
     /**
@@ -51,6 +40,4 @@ class CategoryController extends Controller
 
         return new Response('Catégorie généré');
     }
-
 }
-

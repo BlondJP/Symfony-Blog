@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jean-philippeblond
  * Date: 14/11/2016
- * Time: 14:09
+ * Time: 14:09.
  */
 
 namespace UserBundle;

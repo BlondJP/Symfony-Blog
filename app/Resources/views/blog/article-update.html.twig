@@ -8,6 +8,10 @@
     <br/>
     {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Contenu de l\'article'}}) }}
     <br/>
+    {{ form_widget(form.category, {'attr': {'class': 'form-control', 'placeholder': 'Titre de L\'article'}}) }}
+    <br/>
+    {{ form_row(form.brochure, {'attr': {'class': 'form-control-life', 'placeholder': 'LOL'}}) }}
+    <br/>
     {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
     {{ form_end(form) }}
 {% endblock body %}

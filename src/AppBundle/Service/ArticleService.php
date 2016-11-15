@@ -3,21 +3,16 @@
  * Created by PhpStorm.
  * User: jean-philippeblond
  * Date: 09/11/2016
- * Time: 12:19
+ * Time: 12:19.
  */
 
 namespace AppBundle\Service;
 
 use AppBundle\Repository\ArticleRepository;
-use AppBundle\Entity\Article;
-
-
 use Doctrine\ORM\EntityManager;
-
 
 class ArticleService
 {
-
     private $em;
     private $repoArticle;
 
@@ -68,5 +63,4 @@ class ArticleService
         $this->em->remove($article);
         $this->em->flush();
     }
-
 }

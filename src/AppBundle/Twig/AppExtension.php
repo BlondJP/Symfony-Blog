@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jean-philippeblond
  * Date: 15/11/2016
- * Time: 10:00
+ * Time: 10:00.
  */
 
 namespace AppBundle\Twig;
@@ -23,7 +23,8 @@ class AppExtension extends \Twig_Extension
     public function getGlobals()
     {
         $categories = $this->repoCategory->findAll();
-        return ["categories" => $categories];
+
+        return ['categories' => $categories];
     }
 
     public function getName()

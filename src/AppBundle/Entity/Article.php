@@ -3,9 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Article
+ * Article.
  *
  * @ORM\Table(name="article")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleRepository")
@@ -20,6 +21,26 @@ class Article
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
+     * @Assert\File(mimeTypes={ "application/pdf" })
+     */
+    private $brochure;
+
+    public function getBrochure()
+    {
+        return $this->brochure;
+    }
+
+    public function setBrochure($brochure)
+    {
+        $this->brochure = $brochure;
+
+        return $this;
+    }
 
     /**
      * @var string (plus de 10 caractère)
@@ -43,7 +64,7 @@ class Article
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="article", cascade={"remove"}, orphanRemoval=true)
      */
     private $comments;
 
@@ -101,10 +122,8 @@ class Article
         $this->comments = $comments;
     }
 
-
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -114,7 +133,7 @@ class Article
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -128,7 +147,7 @@ class Article
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -138,7 +157,7 @@ class Article
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
      *
@@ -152,7 +171,7 @@ class Article
     }
 
     /**
-     * Get content
+     * Get content.
      *
      * @return string
      */
@@ -162,7 +181,7 @@ class Article
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
      *
@@ -176,7 +195,7 @@ class Article
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
@@ -185,4 +204,3 @@ class Article
         return $this->date;
     }
 }
-

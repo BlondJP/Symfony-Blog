@@ -3,26 +3,22 @@
  * Created by PhpStorm.
  * User: jean-philippeblond
  * Date: 09/11/2016
- * Time: 10:04
+ * Time: 10:04.
  */
-namespace AppBundle\Controller;
 
+namespace AppBundle\Controller;
 
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
-
 use AppBundle\Form\ArticleForm;
 use AppBundle\Form\CommentForm;
 
 class BlogController extends Controller
 {
-
     /**
      * @Route("/")
      */
@@ -39,7 +35,7 @@ class BlogController extends Controller
         $articleService = $this->get('app.article');
         $articles = $articleService->getArticlesOrderByDate();
 
-        return $this->render("blog/articles.html.twig", ['articles' => $articles]);
+        return $this->render('blog/articles.html.twig', ['articles' => $articles]);
     }
 
     /**
@@ -54,15 +50,16 @@ class BlogController extends Controller
         $comment = new Comment();
         $formComment = $this->createForm(CommentForm::class, $comment);
         $formComment->handleRequest($request);
-        if ($formComment->isSubmitted() && $formComment->isValid())
-        {
+        if ($formComment->isSubmitted() && $formComment->isValid()) {
             $commentService = $this->get('app.comment');
             $comment->setDate(new \DateTime());
             $comment->setArticle($article);
             $commentService->createComment($comment);
         }
 
-        return $this->render("blog/article.html.twig", ['article' => $article, 'formComment' => $formComment->createView(), 'comments' => $article->getComments()]);
+            //dump($article); die;
+
+        return $this->render('blog/article.html.twig', ['article' => $article, 'formComment' => $formComment->createView(), 'comments' => $article->getComments()]);
     }
 
     /**
@@ -70,18 +67,36 @@ class BlogController extends Controller
      */
     public function createAction(Request $request)
     {
+        //return var_dump($this->getParameter('brochures_directory'));
         $article = new Article();
         $form = $this->createForm(ArticleForm::class, $article);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            //$category = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            /* GESTION UPLOAD*/
+            $file = $article->getBrochure();
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            // Move the file to the directory where brochures are stored
+
+            //dump($fileName);
+            //die;
+
+            $file->move(
+                $this->getParameter('brochures_directory'),
+                $fileName
+            );
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $article->setBrochure($fileName);
+            /* FIN GESTION UPLOAD*/
+
             $articleService = $this->get('app.article');
             $articleService->createArticle($article);
+
             return $this->redirectToRoute('articles');
         }
 
-        return $this->render("blog/article-add.html.twig", ['form' => $form->createView()]);
+        return $this->render('blog/article-add.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -91,15 +106,18 @@ class BlogController extends Controller
     {
         $articleService = $this->get('app.article');
         $article = $articleService->getOneArticle(['id' => $id]);
+        $article->setBrochure(
+            new File($this->getParameter('brochures_directory').'/'.$article->getBrochure())
+        );
         $form = $this->createForm(ArticleForm::class, $article);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $articleService->updateArticle($article);
+
             return $this->redirectToRoute('articles');
         }
 
-        return $this->render("blog/article-update.html.twig", ['form' => $form->createView()]);
+        return $this->render('blog/article-update.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -113,5 +131,4 @@ class BlogController extends Controller
 
         return $this->redirectToRoute('articles');
     }
-
 }
