@@ -28,12 +28,12 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/article/generate")
+     * @Route("/category/generate")
      */
     public function generateAction()
     {
         $cat = new Category();
-        $cat->setName('Diététique');
+        $cat->setName('Actualités');
         $em = $this->getDoctrine()->getManager();
         $em->persist($cat);
         $em->flush();

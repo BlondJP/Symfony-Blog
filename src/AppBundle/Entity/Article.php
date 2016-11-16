@@ -53,6 +53,13 @@ class Article
     /**
      * @var string (plus de 10 caractère)
      *
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 250,
+     *      minMessage = "Votre Titre Doit comprendre au moins 10 caractères.",
+     *      maxMessage = "Votre Titre Doit comprendre au maximum 250 caractères."
+     * )
+     *
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;

@@ -85,6 +85,10 @@ class BlogController extends Controller
             $articleService->createArticle($article);
             return $this->redirectToRoute('articles');
         }
+        else
+        {
+            //dump($form->getErrors());
+        }
 
         return $this->render('blog/article-add.html.twig', ['form' => $form->createView()]);
     }

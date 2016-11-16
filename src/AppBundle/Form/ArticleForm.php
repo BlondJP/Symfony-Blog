@@ -33,6 +33,7 @@ class ArticleForm extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Article',
+            'error_bubbling' => true
         ));
     }
 
