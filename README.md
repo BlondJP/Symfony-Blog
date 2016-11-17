@@ -10,6 +10,7 @@ Fonctionnalités implémentées
     <li>Contraintes sur entité appliquées aux formulaires (error/twig)</li>
     <li>Extension Twig pour faire variable globale - Accessible dans ::base.html.twig</li>
     <li>Upload/Stockage d'image</li>
+    <li>Test Unitaires sur Entité & Repository</li>
 </ul>
 
 <p>Ce projet a pour but de fournir une base de code saine.</p>
