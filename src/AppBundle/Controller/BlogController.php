@@ -43,15 +43,12 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/article/get/{article}", name="article_show")
+     * @Route("/article/get/{id}", name="article_show")
      */
-    public function getAction(Request $request, Article $article)
+    public function getAction(Request $request, $id)
     {
-        dump($article); die;
-        /* existing comments */
         $articleService = $this->get('app.article');
         $article = $articleService->getOneArticle(['id' => $id]);
-        /* Handling Comment creation */
         $comment = new Comment();
         $formComment = $this->createForm(CommentForm::class, $comment);
         $formComment->handleRequest($request);
