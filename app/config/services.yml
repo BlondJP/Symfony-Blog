@@ -7,9 +7,18 @@ parameters:
 
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    #Catching d'évèenemnt
+#    app.beta.html:
+ #           class: AppBundle\Beta\BetaHTML
+  #  app.beta.listener:
+   #         class: AppBundle\Beta\BetaListener
+    #        arguments: [@app.beta.html, "2017-10-20"]
+     #       tags:
+      #          - {name: kernel.event_listener, event: kernel.response, method: processBeta}
+       #         - { name: kernel.event_listener, event: kernel.controller, method: ignoreBeta }
+
+
     app.twig_extension:
             class: AppBundle\Twig\AppExtension
             public: false

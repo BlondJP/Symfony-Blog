@@ -21,6 +21,7 @@ class CategoryController extends Controller
      */
     public function showArticleByCategory($categoryId)
     {
+
         $categoryService = $this->get('app.category');
         $category = $categoryService->getCategory($categoryId);
 

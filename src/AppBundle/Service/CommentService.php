@@ -31,4 +31,15 @@ class CommentService
         $this->em->persist($comment);
         $this->em->flush();
     }
+
+    public function addition($a, $b)
+    {
+        return $a + $b;
+    }
+
+    public function testAddition()
+    {
+        $res = $this->addition(1, 1);
+        $this->assertEquals($res, 2, "non égal !");
+    }
 }

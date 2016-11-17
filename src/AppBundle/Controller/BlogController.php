@@ -17,6 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\ArticleForm;
 use AppBundle\Form\CommentForm;
 
+/**/
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+
 class BlogController extends Controller
 {
     /**
@@ -39,10 +43,11 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/article/get/{id}", name="article_show")
+     * @Route("/article/get/{article}", name="article_show")
      */
-    public function getAction(Request $request, $id)
+    public function getAction(Request $request, Article $article)
     {
+        dump($article); die;
         /* existing comments */
         $articleService = $this->get('app.article');
         $article = $articleService->getOneArticle(['id' => $id]);
@@ -56,7 +61,6 @@ class BlogController extends Controller
             $comment->setArticle($article);
             $commentService->createComment($comment);
         }
-
 
         return $this->render('blog/article.html.twig', ['article' => $article, 'formComment' => $formComment->createView(), 'comments' => $article->getComments()]);
     }
