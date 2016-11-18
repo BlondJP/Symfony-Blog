@@ -30,7 +30,7 @@ services:
                 - { name: kernel.event_listener, event: kernel.controller, method: ignoreBeta }
 
 
-
+    # REPOSITORY
     articlerepository:
             class: Doctrine\ORM\EntityRepository
             factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -46,6 +46,12 @@ services:
                     factory: ["@doctrine.orm.entity_manager", getRepository]
                     arguments: [AppBundle\Entity\Category]
 
+    mailrepository:
+                class: Doctrine\ORM\EntityRepository
+                factory: ["@doctrine.orm.entity_manager", getRepository]
+                arguments: [AppBundle\Entity\Mail]
+
+    # SERVICES
     app.article:
         class:        AppBundle\Service\ArticleService
         arguments:    ["@doctrine.orm.entity_manager", "@articlerepository"]
@@ -57,3 +63,7 @@ services:
     app.category:
         class:        AppBundle\Service\CategoryService
         arguments:    ["@doctrine.orm.entity_manager", "@categoryrepository"]
+
+    app.mail:
+            class:        AppBundle\Service\MailService
+            arguments:    ["@doctrine.orm.entity_manager", "@mailrepository"]
