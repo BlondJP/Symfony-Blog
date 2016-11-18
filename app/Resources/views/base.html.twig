@@ -31,12 +31,9 @@
                 <li><a class="navbar-brand" href="{{ path('articles') }}">Mon Blog Symfony</a></li>
                 <li class="dropdown closed">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="f">Trier par<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-header">Catégorie</li>
-                        {% for category in categories %}
-                            <li><a href="{{ path('articles_by_category', { 'categoryId': category.id }) }}">{{ category.name }}</a></li>
-                        {% endfor %}
-                    </ul>
+                    {{ render(controller(
+                    'AppBundle:Category:getCategories'
+                    )) }}
                 </li>
             </ul>
         </div>

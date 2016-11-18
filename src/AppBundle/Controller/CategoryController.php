@@ -41,4 +41,15 @@ class CategoryController extends Controller
 
         return new Response('Catégorie généré');
     }
+
+    /**
+     * @Route("/categories", name="categories")
+     */
+    public function getCategoriesAction()
+    {
+        $categoryService = $this->get('app.category');
+        $categories = $categoryService->getCategories();
+
+        return $this->render('categories.html.twig', ['categories' => $categories]);
+    }
 }

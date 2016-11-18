@@ -16,9 +16,10 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\ArticleForm;
 use AppBundle\Form\CommentForm;
-
+use AppBundle\Beta\BetaHTML;
 /**/
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class BlogController extends Controller
@@ -36,10 +37,11 @@ class BlogController extends Controller
      */
     public function indexAction()
     {
+
         $articleService = $this->get('app.article');
         $articles = $articleService->getArticlesOrderByDate();
 
-        return $this->render('blog/articles.html.twig', ['articles' => $articles]);
+        return $this->render('blog/articles.html.twig', ['articles' => $articles,]);
     }
 
     /**
@@ -47,6 +49,8 @@ class BlogController extends Controller
      */
     public function getAction(Request $request, $id)
     {
+        //return var_dump($request->attributes->get('filter'));
+
         $articleService = $this->get('app.article');
         $article = $articleService->getOneArticle(['id' => $id]);
         $comment = new Comment();
@@ -59,7 +63,9 @@ class BlogController extends Controller
             $commentService->createComment($comment);
         }
 
-        return $this->render('blog/article.html.twig', ['article' => $article, 'formComment' => $formComment->createView(), 'comments' => $article->getComments()]);
+        return $this->render('blog/article.html.twig',
+            ['article' => $article, 'formComment' => $formComment->createView(), 'comments' => $article->getComments()]
+        );
     }
 
     /**

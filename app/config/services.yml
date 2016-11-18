@@ -8,23 +8,28 @@ parameters:
 
 services:
 
-    #Catching d'évèenemnt
+    #Catching d'évèenemnt dans la requete http
 #    app.beta.html:
- #           class: AppBundle\Beta\BetaHTML
-  #  app.beta.listener:
-   #         class: AppBundle\Beta\BetaListener
-    #        arguments: [@app.beta.html, "2017-10-20"]
-     #       tags:
-      #          - {name: kernel.event_listener, event: kernel.response, method: processBeta}
-       #         - { name: kernel.event_listener, event: kernel.controller, method: ignoreBeta }
+ #       class: AppBundle\Beta\BetaHTML
 
+#    app.beta.listener:
+ #       class: AppBundle\Beta\BetaListener
+  #      arguments: [@app.beta.html, "2017-10-20"]
+   #         tags:
+    #            - { name: kernel.event_listener, event: kernel.response, method: processBeta }
+     #           - { name: kernel.event_listener, event: kernel.controller, method: ignoreBeta }
 
-    app.twig_extension:
-            class: AppBundle\Twig\AppExtension
-            public: false
+    app.beta.html:
+        class: AppBundle\Beta\BetaHTML
+
+    app.beta.listener:
+            class: AppBundle\Beta\BetaListener
+            arguments: ["@app.beta.html", "2016-11-20"]
             tags:
-                - { name: twig.extension }
-            arguments:    ["@doctrine.orm.entity_manager", "@categoryrepository"]
+                - { name: kernel.event_listener, event: kernel.response, method: processBeta }
+                - { name: kernel.event_listener, event: kernel.controller, method: ignoreBeta }
+
+
 
     articlerepository:
             class: Doctrine\ORM\EntityRepository

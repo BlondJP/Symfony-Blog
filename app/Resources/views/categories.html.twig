@@ -1,0 +1,6 @@
+<ul class="dropdown-menu">
+    <li class="dropdown-header">Catégorie</li>
+    {% for category in categories %}
+        <li><a href="{{ path('articles_by_category', { 'categoryId': category.id }) }}">{{ category.name }}</a></li>
+    {% endfor %}
+</ul>

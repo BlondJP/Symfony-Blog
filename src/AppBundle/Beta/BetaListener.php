@@ -6,9 +6,10 @@
  * Time: 13:44
  */
 
-namespace AppBundle\Service;
+namespace AppBundle\Beta;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class BetaListener
 {
@@ -26,16 +27,37 @@ class BetaListener
         $this->endDate  = new \Datetime($endDate);
     }
 
-    public function processBeta()
+    // L'argument de la méthode est un FilterResponseEvent
+    public function processBeta(FilterResponseEvent $event)
     {
-        $remainingDays = $this->endDate->diff(new \Datetime())->format('%d');
-
-        if ($remainingDays <= 0) {
-            // Si la date est dépassée, on ne fait rien
+        if (!$event->isMasterRequest()) {
             return;
         }
 
-        // Ici on appelera la méthode
-        // $this->betaHTML->displayBeta()
+        $remainingDays = $this->endDate->diff(new \Datetime())->format('%d');
+
+//        dump($remainingDays); die;
+
+        $remainingDays = intval($remainingDays);
+        //dump($remainingDays); die;
+
+        // Si la date est dépassée, on ne fait rien
+        if ($remainingDays <= 0) {
+            return;
+        }
+
+        //dump('lol'); die;
+
+        // On utilise notre BetaHRML
+        $response = $this->betaHTML->displayBeta($event->getResponse(), $remainingDays);
+        //dump($response); die;
+
+        // On met à jour la réponse avec la nouvelle valeur
+       return $event->setResponse($response);
+    }
+
+    public function ignoreBeta()
+    {
+
     }
 }
